@@ -5,6 +5,9 @@ const database=require("./database");
 //Initialsization
 const booky = express();
 
+//configuration
+booky.use(express.json());
+
 
 //Where is data????(database)
 
@@ -176,5 +179,48 @@ if(getSpecificPublication.length===0){
 return res.json({book:getSpecificPublication});
 });
 
+
+/*
+Route -          /book/add
+Description -    add new book
+Access -         PUBLIC
+Parameter -      NONE
+Methods-         POST
+*/ 
+booky.post("/book/add/",(req,res) => {
+    console.log(req.body);
+        const { newBook } =req.body;
+
+        database.books.push(newBook);
+        return res.json({books:database.books});
+});
+
+/*
+Route -          /author/add
+Description -    add new author
+Access -         PUBLIC
+Parameter -      NONE
+Methods-         POST
+*/ 
+booky.post("/author/add",(req,res)=>{
+    const { newAuthor } =req.body;
+
+    database.author.push(newAuthor);
+    return res.json({authors:database.author});
+});
+
+/*
+Route -          /publication/add
+Description -    add new publication
+Access -         PUBLIC
+Parameter -      NONE
+Methods-         POST
+*/ 
+booky.post("/publication/add",(req,res)=>{
+    const { newPublication } =req.body;
+
+    database.author.push(newPublication);
+    return res.json({publications:database.publication});
+});
 
 booky.listen(8000,() => console.log("Hey server is running😎"));
