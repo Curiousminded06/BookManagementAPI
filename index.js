@@ -222,5 +222,108 @@ booky.post("/publication/add",(req,res)=>{
     database.author.push(newPublication);
     return res.json({publications:database.publication});
 });
+/*
+Route -          /book/update/title/
+Description -    Update book title
+Access -         PUBLIC
+Parameter -      isbn
+Methods-         PUT
+*/ 
+//isbn in paramater and title in body or isbn and title in parameter
+ //forEach or map- we want to update it,not make new array like map so forEach ,but foreach require to change 1000s of data so expensive 😢(tradeoff)
+
+booky.put("/book/update/title/:isbn",(req,res)=>{
+        database.books.forEach((book)=>{
+              if(book.ISBN===req.params.isbn)  {
+                book.title=req.body.newBookTitle;
+                return;
+              }
+        });
+        return res.json({books: database.books});
+});
+/*
+Route -          /book/update/author/
+Description -    update/add new author for a book
+Access -         PUBLIC
+Parameter -      isbn
+Methods-         PUT
+*/ booky.put("/book/update/author/:isbn/:authorId",(req,res)=>{
+        //update book database
+        database.books.forEach((book) =>{
+            if(book.ISBN===req.params.isbn){
+                return book.author.push(parseInt(req.params.authorId)); //author object
+            }
+        });
+        //update author database
+        database.author.forEach((book)=>{
+            if(author.id===parseInt(req.params.authorId)){
+                return author.books.push(req.params.isbn); //book object
+            }
+        });
+    return res.json({books:database.books,author:database.author});
+});
+/*
+/*
+Route -          /author/update/name/
+Description -    Update author name
+Access -         PUBLIC
+Parameter -      id
+Methods-         PUT
+*/
+ booky.put("/author/update/name/:authorId",(req,res)=>{
+    database.author.forEach((author)=>{
+          if(author.id===parseInt(req.params.authorId))  {
+            author.name=req.body.updatedAuthorName;
+            return;
+          }
+    });
+    return res.json({author: database.author});
+});
+
+/*
+Route -          /publication/update/name/
+Description -    Update publication name
+Access -         PUBLIC
+Parameter -      id
+Methods-         PUT
+*/
+
+booky.put("/publication/update/name/:publicationId",(req,res)=>{
+    database.publication.forEach((publication)=>{
+          if(publication.id===parseInt(req.params.publicationId))  {
+            publication.name=req.body.updatedpublicationName;
+            return;
+          }
+    });
+    return res.json({publication: database.publication});
+});
+
+/*
+Route -          /publication/update/book
+Description -    Update/add new book to a publication
+Access -         PUBLIC
+Parameter -      isbn
+Methods-         PUT
+*/
+
+booky.put("/publication/update/book/:isbn",(req,res)=>{
+    //update the publication database
+    database.publication.forEach((publication)=>{ //publiactions or publication??
+        if(publication.id===req.body.pubId){
+           return publication.books.push(req.params.isbn);
+        }
+        });
+    //update book database
+    database.books.forEach((book)=>{
+        if (book.ISBN===req.params.isbn){
+            book.publication=req.params.pubId;
+            return;
+        }
+    });   
+    return res.json({books:database.books,
+        publication:database.publication,
+        message:"Successfully updated publication"});
+});
+
 
 booky.listen(8000,() => console.log("Hey server is running😎"));

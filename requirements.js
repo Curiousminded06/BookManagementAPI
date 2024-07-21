@@ -27,8 +27,8 @@
 
 
 //PUT
-//update book title
-//update/add new author
+//update book title✅
+//update/add new author✅
 
 //DELETE
 //delete a book
@@ -47,10 +47,14 @@
 //add new author✅
 
 //PUT
-//update author name
+//update author name✅
 
 //DELETE
 //delete an author
+
+
+//How the server serves the request
+
 
 
 // Publications
@@ -65,8 +69,8 @@
 
 
 //PUT
-//update the publication name
-// update/add books to publications
+//update the publication name✅
+// update/add books to  a publication✅
 
 //DELETE
 //delete the publication
