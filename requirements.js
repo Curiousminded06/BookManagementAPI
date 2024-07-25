@@ -31,8 +31,8 @@
 //update/add new author✅
 
 //DELETE
-//delete a book
-//delete an author
+//delete a book✅
+//delete an author from a book✅
 
 
 
@@ -50,7 +50,7 @@
 //update author name✅
 
 //DELETE
-//delete an author
+//delete an author✅
 
 
 //How the server serves the request
@@ -73,10 +73,13 @@
 // update/add books to  a publication✅
 
 //DELETE
-//delete the publication
-//delete book from publication
+//delete the publication✅
+//delete book from publication✅
 
 
 
 //browser can only perfrom get request,so we need HTTP client->
 //helper who helps you to make http request-> postman arrives 😎
+
+
+//how does the server serves the request
