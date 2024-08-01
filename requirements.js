@@ -17,13 +17,13 @@
 //Books
 //we need an api 
 //GET
-//to get all books✅
-// to get specific books✅
-// to get list of books based on category✅
-//to get list of books based on lanaguages✅
+//to get all books✅📌
+// to get specific books✅📌
+// to get list of books based on category✅📌
+//to get list of books based on lanaguages✅📌
 
 //POST
-//ADD new book✅
+//ADD new book✅📌
 
 
 //PUT
@@ -39,12 +39,12 @@
 //authors
 //we need an Api
 //GET
-// to get all authors ✅
-// to get specific authors✅
-// to get list of authors based on books✅
+// to get all authors ✅📌
+// to get specific authors✅📌
+// to get list of authors based on books✅📌
 
 //POST
-//add new author✅
+//add new author✅📌
 
 //PUT
 //update author name✅
@@ -60,12 +60,12 @@
 // Publications
 //GET
 // we need an api
-// to get all publications ✅
-//to get specific publication✅
-// to get list of publications based on books✅
+// to get all publications ✅📌
+//to get specific publication✅📌
+// to get list of publications based on books✅📌
 
 //POST
-//add new publications✅
+//add new publications✅📌
 
 
 //PUT
