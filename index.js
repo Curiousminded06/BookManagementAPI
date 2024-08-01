@@ -1,7 +1,15 @@
-const express=require("express");
-//Database
-const database=require("./database");
+require('dotenv').config();
 
+//framework
+const express=require("express");
+const mongoose=require("mongoose");
+
+//Database
+const database=require("./database/database");
+
+
+//establish database connection
+mongoose.connect(process.env.MONGO_URL).then(()=> console.log("connection established😈"));
 //Initialsization
 const booky = express();
 
@@ -436,3 +444,12 @@ booky.delete("/publication/delete/book/:isbn/:pubId",(req,res)=>{
 });
 
 booky.listen(8000,() => console.log("Hey server is running😎"));
+
+
+//Why schema?
+//mongoose helps with validation,relation with data-> only for mongoDB no other DB(gf hai uski😂)
+//mongoDB is schemaless,so cheers to mongoose
+//mongoose model -> document model of mongoDB
+
+//collection??->individual databases ar called as 
+//document->objects inside databases
