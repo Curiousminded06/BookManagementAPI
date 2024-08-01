@@ -8,6 +8,11 @@ const mongoose=require("mongoose");
 const database=require("./database/database");
 
 
+//Models
+const BookModels=require("./database/book");
+const AuthorModels=require("./database/author");
+const PublicationModel=require("./database/publication");
+
 //establish database connection
 mongoose.connect(process.env.MONGO_URL).then(()=> console.log("connection established😈"));
 //Initialsization
