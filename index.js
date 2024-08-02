@@ -285,7 +285,7 @@ booky.put("/book/update/title/:isbn",async(req,res)=>{
         },
         {
         new:true
-        });
+        });//updates data in postman as well
         // database.books.forEach((book)=>{
         //       if(book.ISBN===req.params.isbn)  {
         //         book.title=req.body.newBookTitle;
@@ -293,8 +293,6 @@ booky.put("/book/update/title/:isbn",async(req,res)=>{
         //       }
         // });
         //return res.json({books: database.books});
-        console.log(req.params.isbn);
-        console.log(req.params.newBookTitle);
         
         return res.json({books: updatedBook});
 });
@@ -304,20 +302,41 @@ Description -    update/add new author for a book
 Access -         PUBLIC
 Parameter -      isbn
 Methods-         PUT
-*/ booky.put("/book/update/author/:isbn/:authorId",(req,res)=>{
-        //update book database
-        database.books.forEach((book) =>{
-            if(book.ISBN===req.params.isbn){
-                return book.author.push(parseInt(req.params.authorId)); //author object
+*/ booky.put("/book/update/author/:isbn",async(req,res)=>{
+        //update book database  
+
+        const updatedBook=await BookModel.findOneAndUpdate(
+            {ISBN:req.params.isbn},
+            {
+                $addToSet:{
+                    author: req.body.newAuthor
+                }
+            },
+            {
+                new:true,
             }
-        });
-        //update author database
-        database.author.forEach((book)=>{
-            if(author.id===parseInt(req.params.authorId)){
-                return author.books.push(req.params.isbn); //book object
-            }
-        });
-    return res.json({books:database.books,author:database.author});
+        );
+        // database.books.forEach((book) =>{
+        //     if(book.ISBN===req.params.isbn){
+        //         return book.author.push(parseInt(req.params.authorId)); //author object
+        //     }
+        // });
+        // //update author database
+
+        const updatedAuthor= await AuthorModel.findOneAndUpdate(
+            {id:req.body.newAuthor},
+            {
+                $addToSet:{
+                    books:req.params.isbn
+                }
+            },{new:true }
+        );
+        // database.author.forEach((book)=>{
+        //     if(author.id===parseInt(req.params.authorId)){
+        //         return author.books.push(req.params.isbn); //book object
+        //     }
+        // });
+    return res.json({books:updatedBook,author:updatedAuthor});
 });
 /*
 /*
