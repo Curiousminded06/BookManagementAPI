@@ -31,8 +31,8 @@
 //update/add new author✅📌
 
 //DELETE
-//delete a book✅
-//delete an author from a book✅
+//delete a book✅📌
+//delete an author from a book✅📌
 
 
 

@@ -24,7 +24,7 @@ title:"hello";-> if you want to delete this data then use unset
 /*
 Arrays
 1.$push 
-2.$pop
+2.$pop-> delete only last element
 3.$pull->extract data,similar to filter
 name=["pavan","sahil"];
 name===pavan;//to be extracted
