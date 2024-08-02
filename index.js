@@ -275,14 +275,28 @@ Methods-         PUT
 //isbn in paramater and title in body or isbn and title in parameter
  //forEach or map- we want to update it,not make new array like map so forEach ,but foreach require to change 1000s of data so expensive 😢(tradeoff)
 
-booky.put("/book/update/title/:isbn",(req,res)=>{
-        database.books.forEach((book)=>{
-              if(book.ISBN===req.params.isbn)  {
-                book.title=req.body.newBookTitle;
-                return;
-              }
+booky.put("/book/update/title/:isbn",async(req,res)=>{
+     const updatedBook=await BookModel.findOneAndUpdate(
+        {
+            ISBN:req.params.isbn
+        },
+        {
+            title:req.body.newBookTitle
+        },
+        {
+        new:true
         });
-        return res.json({books: database.books});
+        // database.books.forEach((book)=>{
+        //       if(book.ISBN===req.params.isbn)  {
+        //         book.title=req.body.newBookTitle;
+        //         return;
+        //       }
+        // });
+        //return res.json({books: database.books});
+        console.log(req.params.isbn);
+        console.log(req.params.newBookTitle);
+        
+        return res.json({books: updatedBook});
 });
 /*
 Route -          /book/update/author/
