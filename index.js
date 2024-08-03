@@ -346,14 +346,25 @@ Access -         PUBLIC
 Parameter -      id
 Methods-         PUT
 */
- booky.put("/author/update/name/:authorId",(req,res)=>{
-    database.author.forEach((author)=>{
-          if(author.id===parseInt(req.params.authorId))  {
-            author.name=req.body.updatedAuthorName;
-            return;
-          }
-    });
-    return res.json({author: database.author});
+ booky.put("/author/update/name/:authorId",async(req,res)=>{
+
+    const updatedAuthor=await AuthorModel.findOneAndUpdate(
+        {
+            id:req.params.authorId
+
+        },
+        {
+            name:req.body.newAuthor
+        },
+        {new:true}
+    );
+    // database.author.forEach((author)=>{
+    //       if(author.id===parseInt(req.params.authorId))  {
+    //         author.name=req.body.updatedAuthorName;
+    //         return;
+    //       }
+    // });
+    return res.json({author: updatedAuthor});
 });
 
 /*
@@ -364,14 +375,24 @@ Parameter -      id
 Methods-         PUT
 */
 
-booky.put("/publication/update/name/:publicationId",(req,res)=>{
-    database.publication.forEach((publication)=>{
-          if(publication.id===parseInt(req.params.publicationId))  {
-            publication.name=req.body.updatedpublicationName;
-            return;
-          }
-    });
-    return res.json({publication: database.publication});
+booky.put("/publication/update/name/:publicationId",async(req,res)=>{
+    const updatedPublication=await PublicationModel.findOneAndUpdate(
+        {
+            id:req.params.publicationId
+
+        },
+        {
+            name:req.body.newPublication
+        },
+        {new:true}
+    );
+    // database.publication.forEach((publication)=>{
+    //       if(publication.id===parseInt(req.params.publicationId))  {
+    //         publication.name=req.body.updatedpublicationName;
+    //         return;
+    //       }
+    // });
+    return res.json({publication: updatedPublication});
 });
 
 /*
@@ -480,13 +501,17 @@ Parameter -      authorid
 Methods-         DELETE
 */
 
-booky.delete("/author/delete/:authorId",(req,res)=>{
-
-    const updatedAuthorsDatabase = database.author.filter(
-        (author) =>author.id !== parseInt(req.params.authorId)
+booky.delete("/author/delete/:authorId",async(req,res)=>{
+    const updatedAuthorDatabase=await AuthorModel.findOneAndDelete(
+        {authorId:req.params.id}
     );
-    database.author=updatedAuthorsDatabase
-    return res.json({author: database.author});
+
+    // const updatedAuthorsDatabase = database.author.filter(
+    //     (author) =>author.id !== parseInt(req.params.authorId)
+    // );
+    // database.author=updatedAuthorsDatabase
+    // 
+    return res.json({message:"author got deleted"});
 });
 /*
 Route -          /publication/delete
@@ -496,13 +521,17 @@ Parameter -      pubId
 Methods-         DELETE
 */
 
-booky.delete("/publication/delete/:pubId",(req,res)=>{
+booky.delete("/publication/delete/:pubId",async(req,res)=>{
 
-    const updatedPublicationDatabase = database.publication.filter(
-        (publication) =>publication.id !== parseInt(req.params.pubId)
+    const updatedPublicationDatabase =await PublicationModel.findOneAndDelete(
+        {pubId:req.params.id}
     );
-    database.publication=updatedPublicationDatabase
-    return res.json({publication: database.publication});
+    // const updatedPublicationDatabase = database.publication.filter(
+    //     (publication) =>publication.id !== parseInt(req.params.pubId)
+    // );
+    // database.publication=updatedPublicationDatabase
+    // return res.json({publication: database.publication});
+    return res.json({message:"publication got deleted"});
 });
 /*
 Route -          /publication/delete/book
@@ -513,6 +542,7 @@ Methods-         DELETE
 */
 booky.delete("/publication/delete/book/:isbn/:pubId",(req,res)=>{
         //update publication database, not array here!!!=> 1 to 0,10 to 9
+        
         database.publication.forEach((publication)=>{
             if(publication.id===parseInt(req.params.pubId)){
                 const newBooksList= publication.books.filter(
@@ -523,16 +553,20 @@ booky.delete("/publication/delete/book/:isbn/:pubId",(req,res)=>{
             }
         });
         //update book database 
+        
         database.books.forEach((book)=>{
             if(book.ISBN===req.params.isbn){
                 book.publication=0;//no publication available
                 return;
             }
         });
-        return res.json({books:database.books,database,publication:database.publication})
+        
+        return res.json({books:database.books,publication:database.publication});
 });
 
-booky.listen(8000,() => console.log("Hey server is running😎"));
+booky.listen(8000,() => {
+    return console.log("Hey server is running😎");
+});
 
 
 //Why schema?
